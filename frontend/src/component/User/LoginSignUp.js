@@ -34,8 +34,8 @@ const LoginSignUp = () => {
     const [user, setUser] = useState({
       name: "",
       email: "",
-      year: "",
-      branch: "",
+      year: 2,
+      branch: "CST",
       password: "",
       hostel: "",
       nexthostel: "",
@@ -43,7 +43,7 @@ const LoginSignUp = () => {
     });
 
     const { name, email, year, branch,password, hostel, change,nexthostel } = user;
-       console.table(user);
+      //  console.table(user);
 
 
     const loginSubmit = (e) => {
@@ -222,7 +222,7 @@ const LoginSignUp = () => {
                         2
                       </option>
                       <option value="3">3</option>
-                      <option value="3">4</option>
+                      <option value="4">4</option>
                     </select>
                   </div>
                   <div>
