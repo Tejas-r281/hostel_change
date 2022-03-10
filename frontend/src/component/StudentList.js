@@ -92,7 +92,7 @@ function StudentList() {
 
             <button
               onClick={logoutUser1}
-              className="btn btn-primary updateButton"
+              className="btn btn-danger updateButton"
             >
               Logout
             </button>
@@ -109,7 +109,7 @@ function StudentList() {
           <table class="table">
             <thead class="table-light">
               {" "}
-              
+
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
