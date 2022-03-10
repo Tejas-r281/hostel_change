@@ -112,9 +112,11 @@ function StudentList() {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">Year/branch</th>
                 <th scope="col"> change ?</th>
-                <th scope="col">Excepted</th>
+
                 <th scope="col">Alloted</th>
+                <th scope="col">Excepted</th>
               </tr>
             </thead>
             <tbody>
@@ -123,9 +125,20 @@ function StudentList() {
                 <tr>
                   <th scope="row">{index + 1}</th>
                   <td>{user.name}</td>
-                  <td>{user.change === true ? "Yes" : "No"}</td>
-                  <td>{user.nexthostel}</td>
+                  <td>
+                    {user.year}/{user.branch}
+                  </td>
+
+                  {user.change === true ? (
+                    <td className="text-primary">YES</td>
+                  ) : (
+                    <td className="text-danger">NO</td>
+                  )}
+
                   <td>{user.hostel}</td>
+                  <td>
+                    {user.nexthostel === 0 ? "Not applicable" : user.nexthostel}
+                  </td>
                 </tr>
               ))}
             </tbody>

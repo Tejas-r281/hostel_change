@@ -29,6 +29,11 @@ function UpdateProfile1() {
   });
   //   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const { name, hostel, change, nexthostel } = user1;
+
+  // console.log(change);
+
+
+
   const updateProfileSubmit = (e) => {
     e.preventDefault();
     const myForm = {
@@ -49,7 +54,8 @@ function UpdateProfile1() {
     if (document.querySelector("#checkboxNoLabel:checked")) {
       checked = true;
     }
-    setUser({ ...user1, [e.target.name]: e.target.value, change: checked });
+    // console.log(checked);
+    setUser({ ...user1, [e.target.name]: e.target.value,change:checked });
   };
 
   //   const updateProfileDataChange = (e) => {
@@ -70,6 +76,7 @@ function UpdateProfile1() {
         "change": user.change,
         "nexthostel": user.nexthostel
       };
+      document.getElementById("checkboxNoLabel").checked = user.change;
       setUser(data);
       //   setAvatarPreview(user.avatar.url);
     }

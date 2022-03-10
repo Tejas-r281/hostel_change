@@ -14,7 +14,7 @@
 .LoginSignUpBox {
   background-color: white;
   width: 25vw;
-  height: 70vh;
+  height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -218,4 +218,12 @@
     margin-left:47px;
 
 }
+
+#ddlViewBy,#ddlViewBy1
+{
+    width:100%;
+    padding:5px;
+    margin-left:47px;
+}
+
 

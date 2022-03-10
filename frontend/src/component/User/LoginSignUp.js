@@ -32,16 +32,18 @@ const LoginSignUp = () => {
     const [loginPassword, setLoginPassword] = useState("");
 
     const [user, setUser] = useState({
-        name: "",
-        email: "",
-        password: "",
-        hostel: "",
-        nexthostel: "",
-        change: false
+      name: "",
+      email: "",
+      year: "",
+      branch: "",
+      password: "",
+      hostel: "",
+      nexthostel: "",
+      change: false,
     });
 
-    const { name, email, password, hostel, change,nexthostel } = user;
-    //    console.log(user);
+    const { name, email, year, branch,password, hostel, change,nexthostel } = user;
+       console.table(user);
 
 
     const loginSubmit = (e) => {
@@ -64,6 +66,8 @@ const LoginSignUp = () => {
         {
           "name": name,
           "email": email,
+          "branch": branch,
+          "year": year,
           "password": password,
           "hostel": hostel,
           "change": change,
@@ -92,8 +96,17 @@ const LoginSignUp = () => {
              if (document.querySelector("#checkboxNoLabel:checked")) {
                checked = true;
              }
+
+
+
+
+            //  console.log(strUser);
+            //   console.log(strUser1);
+
+
+
             // console.log(checked);
-        setUser({ ...user, [e.target.name]: e.target.value,change:checked });
+        setUser({ ...user, [e.target.name]: e.target.value });
         // }
     };
     // console.log(location);
@@ -195,6 +208,43 @@ const LoginSignUp = () => {
                       value={email}
                       onChange={registerDataChange}
                     />
+                  </div>
+                  <div>
+                    <span> Year </span>
+                    <select
+                      id="ddlViewBy"
+                      className="mx-3"
+                      name="year"
+                      onChange={registerDataChange}
+                    >
+                      <option value="1">1</option>
+                      <option value="2" selected="selected">
+                        2
+                      </option>
+                      <option value="3">3</option>
+                      <option value="3">4</option>
+                    </select>
+                  </div>
+                  <div>
+                    <span>Branch </span>
+                    <select
+                      id="ddlViewBy1"
+                      className="mx-3"
+                      name="branch"
+                      onChange={registerDataChange}
+                    >
+                      <option value="IT">IT</option>
+                      <option value="CST" selected="selected">
+                        CST
+                      </option>
+                      <option value="ETC">ETC</option>
+                      <option value="EE">EE</option>
+                      <option value="AE">AE</option>
+                      <option value="MIN">MIN</option>
+                      <option value="MET">MET</option>
+                      <option value="ME">ME</option>
+                      <option value="CE">CE</option>
+                    </select>
                   </div>
                   <div className="signUpPassword">
                     <input

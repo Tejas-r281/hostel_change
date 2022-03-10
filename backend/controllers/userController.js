@@ -5,24 +5,33 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
-
-
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-//   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-//     folder: "avatars",
-//     width: 150,
-//     crop: "scale",
-//   });
-// console.log( (req));
-  const { name, email, password,change,hostel,nexthostel } = req.body;
+  //   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+  //     folder: "avatars",
+  //     width: 150,
+  //     crop: "scale",
+  //   });
+  // console.log( (req));
+  const { name, email, year, branch, password, change, hostel, nexthostel } =
+    req.body;
   // console.log("inside the usercontroller");
-   if(hostel<14 || hostel>=17 ||hostel===nexthostel){
-       return next(new ErrorHander("Please Enter valid hostel number", 400));
-    }
+  if (
+    hostel <= 7 ||
+    hostel >= 17 ||
+    hostel === nexthostel ||
+    (change === true && (nexthostel <= 7 || nexthostel >= 17))
+  ) {
+    return next(new ErrorHander("Please Enter valid hostel number", 400));
+  }
+  if (change == false) {
+    nexthostel = 0;
+  }
   const user = await User.create({
     name,
     email,
+    year,
+    branch,
     password,
     change,
     hostel,
@@ -70,7 +79,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
 // Logout User
 exports.logout = catchAsyncErrors(async (req, res, next) => {
-    const { hostel_student } = req.cookies;
+  const { hostel_student } = req.cookies;
   res.cookie(hostel_student, null, {
     expires: new Date(Date.now()),
     httpOnly: true,
@@ -159,7 +168,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 // Get User Detail
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
-
   // console.log(req);
   const user = await User.findById(req.user.id);
 
@@ -192,19 +200,25 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-
   const curr = req.body.hostel;
-  if(curr<=13 || curr>=17)
-    {
-      return next(new ErrorHander("Please Enter valid hostel number", 400));
-    }
-
+  const nexth = req.body.nexthostel;
+  if (
+    curr <= 7 ||
+    curr >= 17 ||
+    curr === nexth ||
+    (req.body.change === true && (nexth <= 7 || nexth >= 17))
+  ) {
+    return next(new ErrorHander("Please Enter valid hostel number", 400));
+  }
+  if (req.body.change == false) {
+    req.body.nexthostel = 0;
+  }
 
   const newUserData = {
     name: req.body.name,
-     hostel:req.body.hostel,
-     change:req.body.change,
-      nexthostel:req.body.nexthostel,
+    hostel: req.body.hostel,
+    change: req.body.change,
+    nexthostel: req.body.nexthostel,
   };
 
   // if (req.body.avatar !== "") {
@@ -285,8 +299,6 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 
 // Delete User --Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
-
-
   // console.log("inside the delete section");
   const user = await User.findById(req.user.id);
   // console.log(user);
@@ -297,9 +309,9 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-//   const imageId = user.avatar.public_id;
+  //   const imageId = user.avatar.public_id;
 
-//   await cloudinary.v2.uploader.destroy(imageId);
+  //   await cloudinary.v2.uploader.destroy(imageId);
 
   await user.remove();
 
