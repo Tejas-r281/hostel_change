@@ -17,7 +17,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 // console.log( (req));
   const { name, email, password,change,hostel,nexthostel } = req.body;
   // console.log("inside the usercontroller");
-   if(hostel<=10 || hostel>=17 || nexthostel<=10 || nexthostel>=17 || hostel===nexthostel){
+   if(hostel<14 || hostel>=17 ||hostel===nexthostel){
        return next(new ErrorHander("Please Enter valid hostel number", 400));
     }
   const user = await User.create({
