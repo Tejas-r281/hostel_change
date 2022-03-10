@@ -1,0 +1,17 @@
+
+.details
+{
+    display: flex;
+    justify-content: space-between;
+}
+.updateButton
+{
+        margin-top: 30px;
+    /* margin-left: 35vw !important; */
+    margin-right:5px;
+}
+a
+{
+    color:red;
+    text-decoration:none;
+}
