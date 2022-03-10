@@ -7,12 +7,9 @@ const crypto = require("crypto");
 
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  //   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-  //     folder: "avatars",
-  //     width: 150,
-  //     crop: "scale",
-  //   });
-  // console.log( (req));
+  if (req.body.change === false) {
+    req.body.nexthostel = 0;
+  }
   const { name, email, year, branch, password, change, hostel, nexthostel } =
     req.body;
   // console.log("inside the usercontroller");
@@ -24,9 +21,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   ) {
     return next(new ErrorHander("Please Enter valid hostel number", 400));
   }
-  if (change == false) {
-    nexthostel = 0;
-  }
+
   const user = await User.create({
     name,
     email,
@@ -36,20 +31,44 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     change,
     hostel,
     nexthostel,
-    // avatar: {
-    //   public_id: myCloud.public_id,
-    //   url: myCloud.secure_url,
-    // },
   });
+/*
+  // 2) Generate ResetPassword Token
+  const resetToken = user.getResetPasswordToken();
+  // 3) Save the resetToken in the user's document
+  await user.save({ validateBeforeSave: false });
+  // 3) Send it to user's email
+  const resetPasswordUrl = `${process.env.URL}/user/confirm/${resetToken}`;
 
+  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetPasswordUrl}.\nIf you didn't forget your password, please ignore this email!`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Please click to confirm the you email address`,
+      message: message,
+    });
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${user.email} successfully`,
+    });
+  } catch (err) {
+    console.log(err);
+    // agar saara galt ho jaata hai then humko dubaara user ka reset token bagerah ko undefined karna padega
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return next(
+      new ErrorHander(
+        "There was an error sending the email. Try again later!",
+        500
+      )
+    );
+  }
+*/
   sendToken(user, 201, res);
-
-  // res.status(201).json({
-  //   status: "success",
-  //   data: {
-  //     user,
-  //   },
-  // });
 });
 
 // Login User
@@ -73,7 +92,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHander("Invalid email or password", 401));
   }
-
+  // if (user.confirmed == false) {
+  //   return next(new ErrorHander("Please confirm your email", 401));
+  // }
   sendToken(user, 200, res);
 });
 

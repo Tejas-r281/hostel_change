@@ -56,6 +56,10 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: [true, "Do you want to change your hostel no ? "],
   },
+  confirmed: {
+    type: Boolean,
+    default: false,
+  },
 
   //   avatar: {
   //     public_id: {

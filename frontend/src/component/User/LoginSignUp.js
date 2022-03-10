@@ -34,8 +34,8 @@ const LoginSignUp = () => {
     const [user, setUser] = useState({
       name: "",
       email: "",
-      year: 2,
-      branch: "CST",
+      year: 1,
+      branch: "IT",
       password: "",
       hostel: "",
       nexthostel: "",
@@ -106,7 +106,7 @@ const LoginSignUp = () => {
 
 
             // console.log(checked);
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setUser({ ...user, [e.target.name]: e.target.value,change:checked });
         // }
     };
     // console.log(location);
@@ -218,7 +218,7 @@ const LoginSignUp = () => {
                       onChange={registerDataChange}
                     >
                       <option value="1">1</option>
-                      <option value="2" selected="selected">
+                      <option value="2">
                         2
                       </option>
                       <option value="3">3</option>
@@ -234,7 +234,7 @@ const LoginSignUp = () => {
                       onChange={registerDataChange}
                     >
                       <option value="IT">IT</option>
-                      <option value="CST" selected="selected">
+                      <option value="CST" >
                         CST
                       </option>
                       <option value="ETC">ETC</option>
