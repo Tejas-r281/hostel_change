@@ -109,12 +109,12 @@ function StudentList() {
           <table class="table">
             <thead class="table-light">
               {" "}
-
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Do you want to change ?/ which hostel</th>
-                <th scope="col">Current Hostel</th>
+                <th scope="col"> change ?</th>
+                <th scope="col">Excepted</th>
+                <th scope="col">Alloted</th>
               </tr>
             </thead>
             <tbody>
@@ -123,9 +123,8 @@ function StudentList() {
                 <tr>
                   <th scope="row">{index + 1}</th>
                   <td>{user.name}</td>
-                  <td>
-                    {user.change === true ? "Yes" : "No"} / {user.nexthostel}
-                  </td>
+                  <td>{user.change === true ? "Yes" : "No"}</td>
+                  <td>{user.nexthostel}</td>
                   <td>{user.hostel}</td>
                 </tr>
               ))}

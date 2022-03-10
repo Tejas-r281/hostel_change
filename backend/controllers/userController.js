@@ -192,6 +192,14 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+
+  const curr = req.body.hostel;
+  if(curr<=13 || curr>=17)
+    {
+      return next(new ErrorHander("Please Enter valid hostel number", 400));
+    }
+
+
   const newUserData = {
     name: req.body.name,
      hostel:req.body.hostel,
