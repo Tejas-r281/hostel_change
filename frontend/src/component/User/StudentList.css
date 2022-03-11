@@ -12,6 +12,12 @@
 }
 a
 {
-    color:red;
+    color:white;
     text-decoration:none;
+}
+
+.badge
+{
+    height:30px;
+    margin-top:20px;
 }

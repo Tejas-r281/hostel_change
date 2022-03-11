@@ -7,7 +7,7 @@ import LoginSignUp from "./component/User/LoginSignUp.js";
 import { getAllUsers,loadUser } from "./actions/userAction.js";
 // import UserList from "./Component/Admin/UsersList.js";
 // import UpdateUser from "./component/Admin/UpdateUser.js";
-import StudentList from "./component/StudentList.js";
+import StudentList from "./component/User/StudentList.js";
 import NotFound from "./component/Layout/Notfound/NotFound.js";
 import UpdateStudent from "./component/User/UpdateStudent.js"
 import ForgotPassword from "./component/User/ForgotPassword.js";
@@ -21,6 +21,8 @@ function App() {
       store.dispatch(getAllUsers());
      store.dispatch(loadUser());
   }, []);
+
+  window.addEventListener("contextmenu", (e) => e.preventDefault());
   return (
     <Router>
       <Routes>

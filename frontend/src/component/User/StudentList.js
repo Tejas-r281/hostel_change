@@ -9,9 +9,10 @@ import {
   clearErrors,
   logout,
 
-} from "../actions/userAction";
+} from "../../actions/userAction";
 import { useAlert } from "react-alert";
-import { DELETE_USER_RESET, DELETE_USER } from "../constants/userConstant.js";
+import RowComponet from "./RowComponet";
+import { DELETE_USER_RESET, DELETE_USER } from "../../constants/userConstant.js";
 function StudentList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ function StudentList() {
               width="24"
               height="24"
               fill="currentColor"
-              class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+              className="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
               viewBox="0 0 16 16"
               role="img"
               aria-label="Warning:"
@@ -107,7 +108,7 @@ function StudentList() {
               width="24"
               height="24"
               fill="currentColor"
-              class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+              className="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
               viewBox="0 0 16 16"
               role="img"
               aria-label="Warning:"
@@ -138,19 +139,18 @@ function StudentList() {
             >
               Logout
             </button>
-            <button className="btn btn-primary updateButton">
+            <span className="badge rounded-pill bg-primary">
               <a
                 href="https://www.linkedin.com/in/raushankumar43/"
                 target="_blank"
               >
-                Created by
+                Admin
               </a>
-            </button>
+            </span>
           </div>
 
-          <table class="table">
-            <thead class="table-light">
-              {" "}
+          <table className="table">
+            <thead className="table-light">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
@@ -162,27 +162,11 @@ function StudentList() {
               </tr>
             </thead>
             <tbody>
-              {" "}
-              {users.map((user, index) => (
-                <tr>
-                  <th scope="row">{index + 1}</th>
-                  <td>{user.name}</td>
-                  <td>
-                    {user.year}/{user.branch}
-                  </td>
-
-                  {user.change === true ? (
-                    <td className="text-primary">YES</td>
-                  ) : (
-                    <td className="text-danger">NO</td>
-                  )}
-
-                  <td>{user.hostel}</td>
-                  <td>
-                    {user.nexthostel === 0 ? "Not applicable" : user.nexthostel}
-                  </td>
-                </tr>
-              ))}
+              {users
+                .filter((user) => user.confirmed === true)
+                .map((user, index) => (
+                  <RowComponet user={user} index={index} key={index} />
+                ))}
             </tbody>
           </table>
         </div>

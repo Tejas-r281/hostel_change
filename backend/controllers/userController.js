@@ -316,7 +316,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Get all users(admin)
 exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
-  const users = await User.find().sort({change: -1 });
+  const users = await User.find().sort({change: -1,nexthostel:1,name:1});
 
   res.status(200).json({
     success: true,
