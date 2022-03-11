@@ -73,6 +73,10 @@ function StudentList() {
     <div className="container-fluid fixed">
       <div className="row">
         <div className="col-md-10 col-12 mx-auto">
+          <div className=" py-2 my-2 alert alert-primary" role="alert">
+            This is not an official portal of institute, it's created by a
+            student for ease of exchanging
+          </div>
           <div
             className=" py-2  my-2 alert alert-primary d-flex align-items-center"
             role="alert"
