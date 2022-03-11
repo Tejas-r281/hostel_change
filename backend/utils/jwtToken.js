@@ -11,7 +11,7 @@ const sendToken = (user, statusCode, res,confirm) => {
     httpOnly: true,
   };
   if (confirm === "confirmation") {
-    res.redirect("http://localhost:3000/");
+    res.redirect(`${process.env.URL}`);
   } else {
     res.status(statusCode).cookie("hostel_student", token, options).json({
       success: true,

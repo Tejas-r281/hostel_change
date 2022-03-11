@@ -20,7 +20,7 @@ const LoginSignUp = () => {
     const dispatch = useDispatch();
     const alert = useAlert();
 
-    const { error, loading, isAuthenticated,success } = useSelector(
+    const { error, loading, isAuthenticated,success,done } = useSelector(
         (state) => state.user
     );
 
@@ -117,14 +117,19 @@ const LoginSignUp = () => {
             alert.error(error);
             dispatch(clearErrors());
         }
-
+        if(done===true)
+        {
+          alert.success("Email sent , please confirm your email");
+        }
         if (isAuthenticated) {
             // history.push(redirect);
-            
-            navigate("/students");
             dispatch(getAllUsers());
+            navigate("/students");
+
         }
-    }, [dispatch, error, alert, navigate,success,  location, isAuthenticated]);
+
+
+    }, [dispatch, error, alert, navigate,success,done , location, isAuthenticated]);
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {

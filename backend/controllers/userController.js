@@ -32,7 +32,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     hostel,
     nexthostel,
   });
-/*
+
   // 2) Generate ResetPassword Token
   const resetToken = user.getResetPasswordToken();
   // 3) Save the resetToken in the user's document
@@ -68,9 +68,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
       )
     );
   }
-  */
 
-   sendToken(user, 201, res);
+
+  //  sendToken(user, 201, res);
 });
 
 // confirm user
@@ -98,7 +98,6 @@ const user = await User.findOne({
 await user.save();
 
 sendToken(user, 200, res,"confirmation");
-
 
 });
 
