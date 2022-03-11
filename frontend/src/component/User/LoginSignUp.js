@@ -156,6 +156,7 @@ const LoginSignUp = () => {
           <Fragment>
             <div className="LoginSignUpContainer">
               <div className="LoginSignUpBox">
+               <p className="text-primary my-3 mx-3">You have to first Register and then Email varification and then login.</p>
                 <div>
                   <div className="login_signUp_toggle">
                     <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
@@ -186,7 +187,7 @@ const LoginSignUp = () => {
                       onChange={(e) => setLoginPassword(e.target.value)}
                     />
                   </div>
-
+                  <Link to="/password/forgot">Forget Password ?</Link>
                   <input type="submit" value="Login" className="loginBtn" />
                 </form>
                 <form
@@ -224,9 +225,7 @@ const LoginSignUp = () => {
                       onChange={registerDataChange}
                     >
                       <option value="1">1</option>
-                      <option value="2">
-                        2
-                      </option>
+                      <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
                     </select>
@@ -240,9 +239,7 @@ const LoginSignUp = () => {
                       onChange={registerDataChange}
                     >
                       <option value="IT">IT</option>
-                      <option value="CST" >
-                        CST
-                      </option>
+                      <option value="CST">CST</option>
                       <option value="ETC">ETC</option>
                       <option value="EE">EE</option>
                       <option value="AE">AE</option>

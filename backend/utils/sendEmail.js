@@ -85,7 +85,7 @@ const sendEmail = async (options) => {
   });
   // console.log(options);
   const mailOptions = {
-    from: "This is for email conformation <raushan.043.kumar@gmail.com>",
+    from: "<raushan.043.kumar@gmail.com>",
     to: options.email,
     subject: options.subject,
     text: options.message,

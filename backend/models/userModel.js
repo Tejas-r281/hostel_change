@@ -20,14 +20,12 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, "Please Enter a valid Email"],
   },
-  year:
-  {
-    type:Number,
+  year: {
+    type: Number,
     required: [true, "Please Enter Your Year"],
   },
-  branch:
-  {
-    type:String,
+  branch: {
+    type: String,
     required: [true, "Please Enter Your Branch"],
   },
   password: {
@@ -36,22 +34,18 @@ const userSchema = new mongoose.Schema({
     minLength: [8, "Password should be greater than 8 characters"],
     select: false,
   },
-  hostel:
-  {
+  hostel: {
     type: Number,
 
     // description: "must be an integer in [ 2017, 3017 ] and is required",
-     required: [true, "Please Enter Your current Hostel No "],
+    required: [true, "Please Enter Your current Hostel No "],
   },
-  nexthostel:
-  {
+  nexthostel: {
     type: Number,
     default: 0,
     required: [false, "Please Enter Your Next Hostel No "],
-  }
-  ,
-  change:
-  {
+  },
+  change: {
     type: Boolean,
     default: false,
     required: [true, "Do you want to change your hostel no ? "],
@@ -82,6 +76,8 @@ const userSchema = new mongoose.Schema({
 
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  resetPasswordTokenemailconfirm: String,
+  resetPasswordExpireemailconfirm: Date,
 });
 
 userSchema.pre("save", async function (next) {
@@ -95,7 +91,7 @@ userSchema.pre("save", async function (next) {
 // JWT TOKEN
 userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: '5d',
+    expiresIn: '2d',
   });
 };
 
@@ -117,6 +113,20 @@ userSchema.methods.getResetPasswordToken = function () {
     .digest("hex");
 
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+  return resetToken;
+};
+userSchema.methods.getResetPasswordTokenemailconfirm = function () {
+  // Generating Token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  // Hashing and adding resetPasswordToken to userSchema
+  this.resetPasswordTokenemailconfirm = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.resetPasswordExpireemailconfirm = Date.now() + 15 * 60 * 1000;
 
   return resetToken;
 };

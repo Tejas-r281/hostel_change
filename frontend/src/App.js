@@ -10,6 +10,8 @@ import { getAllUsers,loadUser } from "./actions/userAction.js";
 import StudentList from "./component/StudentList.js";
 import NotFound from "./component/Layout/Notfound/NotFound.js";
 import UpdateStudent from "./component/User/UpdateStudent.js"
+import ForgotPassword from "./component/User/ForgotPassword.js";
+import ResetPassword from "./component/User/ResetPassword.js";
 // import { useSelector } from "react-redux";
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
         {isAuthenticated && (
           <Route exact path="/me/update" element={<UpdateStudent />} />
         )}
+        <Route path="/password/forgot" element={<ForgotPassword />} />
+        <Route exact path="/password/reset/:token" element={<ResetPassword/>} />
 
         <Route path="/*" element={<NotFound />} />
       </Routes>

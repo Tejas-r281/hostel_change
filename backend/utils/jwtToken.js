@@ -1,6 +1,6 @@
 // Create Token and saving in cookie
 
-const sendToken = (user, statusCode, res,confirm) => {
+const sendToken = (user,req, statusCode, res,confirm) => {
   const token = user.getJWTToken();
 
   // options for cookie
@@ -11,7 +11,7 @@ const sendToken = (user, statusCode, res,confirm) => {
     httpOnly: true,
   };
   if (confirm === "confirmation") {
-    res.redirect(`${process.env.URL}`);
+    res.redirect(`${req.protocol}://${req.get("host")}`);
   } else {
     res.status(statusCode).cookie("hostel_student", token, options).json({
       success: true,

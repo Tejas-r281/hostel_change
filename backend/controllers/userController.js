@@ -34,11 +34,16 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   });
 
   // 2) Generate ResetPassword Token
-  const resetToken = user.getResetPasswordToken();
+  const resetToken = user.getResetPasswordTokenemailconfirm();
   // 3) Save the resetToken in the user's document
   await user.save({ validateBeforeSave: false });
   // 3) Send it to user's email
-  const resetPasswordUrl = `${process.env.URL}/api/v1/user/confirm/${resetToken}`;
+  const resetPasswordUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/user/confirm/${resetToken}`;
+// const resetPasswordUrl = `http://localhost:5000/api/v1/user/confirm/${resetToken}`;
+
+
 
 
   const message = `Please click this link to confirm your email address: ${resetPasswordUrl}.\n`;
@@ -56,8 +61,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   } catch (err) {
     console.log(err);
     // agar saara galt ho jaata hai then humko dubaara user ka reset token bagerah ko undefined karna padega
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpire = undefined;
+    user.resetPasswordTokenemailconfirm = undefined;
+    user.resetPasswordExpireemailconfirm = undefined;
 
     await user.save({ validateBeforeSave: false });
 
@@ -75,14 +80,14 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
 // confirm user
 exports.confirmUser = catchAsyncErrors(async (req, res, next) => {
-const resetPasswordToken = crypto
+const resetPasswordTokenemailconfirm = crypto
   .createHash("sha256")
   .update(req.params.token)
   .digest("hex");
 
 const user = await User.findOne({
-  resetPasswordToken,
-  resetPasswordExpire: { $gt: Date.now() },
+  resetPasswordTokenemailconfirm,
+  resetPasswordExpireemailconfirm: { $gt: Date.now() },
 });
 
   if (!user) {
@@ -90,14 +95,14 @@ const user = await User.findOne({
   }
 
   user.confirmed = true;
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpire = undefined;
+  user.resetPasswordTokenemailconfirm = undefined;
+  user.resetPasswordExpireemailconfirm = undefined;
   // await user.save({ validateBeforeSave: false });
 
 
 await user.save();
 
-sendToken(user, 200, res,"confirmation");
+sendToken(user,req, 200, res,"confirmation");
 
 });
 
@@ -145,7 +150,12 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 
 // Forgot Password
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  // console.log("inside the forgot password");
   const user = await User.findOne({ email: req.body.email });
+
+  // console.log(user);
+
+
 
   if (!user) {
     return next(new ErrorHander("User not found", 404));
