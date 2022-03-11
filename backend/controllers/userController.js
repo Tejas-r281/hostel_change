@@ -131,7 +131,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (user.confirmed == false) {
     return next(new ErrorHander("Please confirm your email", 401));
   }
-  sendToken(user, 200, res);
+  sendToken(user,req, 200, res);
 });
 
 // Logout User
@@ -225,7 +225,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save();
 
-  sendToken(user, 200, res);
+  sendToken(user,req, 200, res);
 });
 
 // Get User Detail
@@ -257,7 +257,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save();
 
-  sendToken(user, 200, res);
+  sendToken(user, req,200, res);
 });
 
 // update User Profile
@@ -316,7 +316,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Get all users(admin)
 exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
-  const users = await User.find().sort({ name: 1 });
+  const users = await User.find().sort({change: -1 });
 
   res.status(200).json({
     success: true,
