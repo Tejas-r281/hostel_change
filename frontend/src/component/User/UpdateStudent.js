@@ -58,16 +58,6 @@ function UpdateProfile1() {
     setUser({ ...user1, [e.target.name]: e.target.value,change:checked });
   };
 
-  //   const updateProfileDataChange = (e) => {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setAvatarPreview(reader.result);
-  //         setAvatar(reader.result);
-  //       }
-  //     };
-  // reader.readAsDataURL(e.target.files[0]);
-  //   };
   useEffect(() => {
     if (user) {
       const data = {
@@ -88,7 +78,7 @@ function UpdateProfile1() {
 
     if (isUpdated) {
       alert.success("Profile Updated Successfully");
-      dispatch(loadUser());
+      // dispatch(loadUser());
       navigate("/");
       dispatch({
         type: UPDATE_PROFILE_RESET,

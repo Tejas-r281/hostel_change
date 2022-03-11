@@ -38,9 +38,10 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   // 3) Save the resetToken in the user's document
   await user.save({ validateBeforeSave: false });
   // 3) Send it to user's email
-  const resetPasswordUrl = `${process.env.URL}/user/confirm/${resetToken}`;
+  const resetPasswordUrl = `${process.env.URL}/api/v1/user/confirm/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetPasswordUrl}.\nIf you didn't forget your password, please ignore this email!`;
+
+  const message = `Please click this link to confirm your email address: ${resetPasswordUrl}.\n`;
 
   try {
     await sendEmail({
@@ -71,6 +72,36 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 201, res);
 });
 
+// confirm user
+exports.confirmUser = catchAsyncErrors(async (req, res, next) => {
+const resetPasswordToken = crypto
+  .createHash("sha256")
+  .update(req.params.token)
+  .digest("hex");
+
+const user = await User.findOne({
+  resetPasswordToken,
+  resetPasswordExpire: { $gt: Date.now() },
+});
+
+  if (!user) {
+    return next(new ErrorHander("Invalid Token", 400));
+  }
+
+  user.confirmed = true;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  // await user.save({ validateBeforeSave: false });
+
+
+await user.save();
+
+sendToken(user, 200, res,"confirmation");
+
+
+});
+
+
 // Login User
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
@@ -92,9 +123,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHander("Invalid email or password", 401));
   }
-  // if (user.confirmed == false) {
-  //   return next(new ErrorHander("Please confirm your email", 401));
-  // }
+  if (user.confirmed == false) {
+    return next(new ErrorHander("Please confirm your email", 401));
+  }
   sendToken(user, 200, res);
 });
 

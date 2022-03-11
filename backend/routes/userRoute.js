@@ -12,6 +12,7 @@ const {
   getSingleUser,
   updateUserRole,
   deleteUser,
+  confirmUser,
   // homepage
 } = require("../controllers/userController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
@@ -27,6 +28,8 @@ router.route("/login").post(loginUser);
 router.route("/password/forgot").post(forgotPassword);
 
 router.route("/password/reset/:token").put(resetPassword);
+
+router.route("/user/confirm/:token").get(confirmUser);
 
 router.route("/logout").get(logout);
 

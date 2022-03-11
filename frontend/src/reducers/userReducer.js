@@ -39,6 +39,7 @@ import {
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
   CLEAR_ERRORS,
+  DELETE_USER,
 } from "../constants/userConstant";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -51,8 +52,8 @@ export const userReducer = (state = { user: {} }, action) => {
         loading: true,
         isAuthenticated: false,
       };
-    case LOGIN_SUCCESS:
     case REGISTER_USER_SUCCESS:
+    case LOGIN_SUCCESS:
     case LOAD_USER_SUCCESS:
       return {
         ...state,
@@ -60,7 +61,11 @@ export const userReducer = (state = { user: {} }, action) => {
         isAuthenticated: true,
         user: action.payload,
       };
-
+    case DELETE_USER:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
     case LOGOUT_SUCCESS:
       return {
         loading: false,
@@ -146,12 +151,14 @@ export const profileReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+        // isAuthenticated: false,
       };
 
     case DELETE_USER_RESET:
       return {
         ...state,
         isDeleted: false,
+        nahihoga: false,
       };
 
     case CLEAR_ERRORS:
