@@ -1,7 +1,7 @@
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
-const makePdf = require("../utils/makePdf");
+// const makePdf = require("../utils/makePdf");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
@@ -176,13 +176,13 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
         </div>
         </div>
         `,
-    attachments: [
-      {
-        filename: "hostel.pdf",
-        path: "hostel.pdf",
-        cid: "hostel",
-      },
-    ],
+    // attachments: [
+    //   {
+    //     filename: "hostel.pdf",
+    //     path: "hostel.pdf",
+    //     cid: "hostel",
+    //   },
+    // ],
   };
 
   try {
