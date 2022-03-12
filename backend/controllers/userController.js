@@ -126,11 +126,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Please confirm your email", 401));
   }
   //pdf formation
-  try {
-    makePdf(user);
-  } catch (err) {
-    console.log(err);
-  }
+ 
   const from1 = "<raushan.043.kumar@gmail>";
   const data = {
     from: from1,
