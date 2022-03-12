@@ -45,13 +45,16 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   // const resetPasswordUrl = `http://localhost:5000/api/v1/user/confirm/${resetToken}`;
 
   const message = `Please click this link to confirm your email address: ${resetPasswordUrl}.\n`;
-
+  const data =
+  {
+    from: "<raushan.043.kumar@gmail>",
+    to: user.email,
+    email:user.email,
+    message:message,
+    subject:"Please click to confirm the you email address"
+  }
   try {
-    await sendEmail({
-      email: user.email,
-      subject: `Please click to confirm the you email address`,
-      message: message,
-    });
+    await sendEmail(data);
     res.status(200).json({
       success: true,
       message: `Email sent to ${user.email} successfully`,
@@ -126,10 +129,10 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Please confirm your email", 401));
   }
   //pdf formation
- 
-  const from1 = "<raushan.043.kumar@gmail>";
+
+  // const from1 = "<raushan.043.kumar@gmail>";
   const data = {
-    from: from1,
+    from: "<raushan.043.kumar@gmail>",
     to: user.email,
     subject: "Thanks for visiting us ",
     html: `
@@ -225,13 +228,16 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   )}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
-
+   const data =
+   {
+     from: "<raushan.043.kumar@gmail>",
+     to: user.email,
+      email:user.email,
+      message:message,
+      subject:"Please click to reset your password"
+   }
   try {
-    await sendEmail({
-      email: user.email,
-      subject: ` Password Recovery`,
-      message,
-    });
+    await sendEmail(data);
 
     res.status(200).json({
       success: true,
