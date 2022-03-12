@@ -1,6 +1,7 @@
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
+const makePdf = require("../utils/makePdf");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
@@ -41,10 +42,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const resetPasswordUrl = `${req.protocol}://${req.get(
     "host"
   )}/api/v1/user/confirm/${resetToken}`;
-// const resetPasswordUrl = `http://localhost:5000/api/v1/user/confirm/${resetToken}`;
-
-
-
+  // const resetPasswordUrl = `http://localhost:5000/api/v1/user/confirm/${resetToken}`;
 
   const message = `Please click this link to confirm your email address: ${resetPasswordUrl}.\n`;
 
@@ -74,21 +72,20 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-
   //  sendToken(user, 201, res);
 });
 
 // confirm user
 exports.confirmUser = catchAsyncErrors(async (req, res, next) => {
-const resetPasswordTokenemailconfirm = crypto
-  .createHash("sha256")
-  .update(req.params.token)
-  .digest("hex");
+  const resetPasswordTokenemailconfirm = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
 
-const user = await User.findOne({
-  resetPasswordTokenemailconfirm,
-  resetPasswordExpireemailconfirm: { $gt: Date.now() },
-});
+  const user = await User.findOne({
+    resetPasswordTokenemailconfirm,
+    resetPasswordExpireemailconfirm: { $gt: Date.now() },
+  });
 
   if (!user) {
     return next(new ErrorHander("Invalid Token", 400));
@@ -99,13 +96,10 @@ const user = await User.findOne({
   user.resetPasswordExpireemailconfirm = undefined;
   // await user.save({ validateBeforeSave: false });
 
+  await user.save();
 
-await user.save();
-
-sendToken(user,req, 200, res,"confirmation");
-
+  sendToken(user, req, 200, res, "confirmation");
 });
-
 
 // Login User
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
@@ -131,7 +125,73 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (user.confirmed == false) {
     return next(new ErrorHander("Please confirm your email", 401));
   }
-  sendToken(user,req, 200, res);
+  //pdf formation
+  try {
+    makePdf(user);
+  } catch (err) {
+    console.log(err);
+  }
+  const from1 = "<raushan.043.kumar@gmail>";
+  const data = {
+    from: from1,
+    to: user.email,
+    subject: "Thanks for visiting us ",
+    html: `
+        <div  style=" height:500px; width:500px;background:#E5E5E5;">
+         <h2>Your details as follows</h2>
+        <div style="height:300px; width:300px;display:flex; flex-direction:column; justify-content:center; text-align:center;">
+
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Enter value </th>
+
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>${user.name}</td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td>${user.email}</td>
+  </tr>
+  <tr>
+    <td>Year</td>
+    <td>${user.year}</td>
+  </tr>
+  <tr>
+    <td>Branch</td>
+    <td>${user.branch}</td>
+  </tr>
+  <tr>
+    <td>Alloted</td>
+    <td>${user.hostel}</td>
+  </tr>
+  <tr>
+    <td>Expected</td>
+    <td>${user.nexthostel ? user.nexthostel : "not applicable"}</td>
+  </tr>
+
+</table>
+        </div>
+        </div>
+        `,
+    attachments: [
+      {
+        filename: "hostel.pdf",
+        path: "../record/frontend/public/pdfs/hostel.pdf",
+        cid: "hostel",
+      },
+    ],
+  };
+
+  try {
+    await sendEmail(data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  sendToken(user, req, 200, res);
 });
 
 // Logout User
@@ -154,8 +214,6 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   // console.log(user);
-
-
 
   if (!user) {
     return next(new ErrorHander("User not found", 404));
@@ -225,7 +283,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save();
 
-  sendToken(user,req, 200, res);
+  sendToken(user, req, 200, res);
 });
 
 // Get User Detail
@@ -257,7 +315,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save();
 
-  sendToken(user, req,200, res);
+  sendToken(user, req, 200, res);
 });
 
 // update User Profile
@@ -316,7 +374,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Get all users(admin)
 exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
-  const users = await User.find().sort({change: -1,nexthostel:1,name:1});
+  const users = await User.find().sort({ change: -1, nexthostel: 1, name: 1 });
 
   res.status(200).json({
     success: true,

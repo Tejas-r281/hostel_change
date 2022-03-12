@@ -153,7 +153,8 @@ function StudentList() {
             <thead className="table-light">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
+                <th scope="col">Name  Total : <span className="text-danger">{users.length}</span> </th>
+
                 <th scope="col">Year/branch</th>
                 <th scope="col"> change ?</th>
 

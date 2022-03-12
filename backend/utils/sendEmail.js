@@ -84,14 +84,14 @@ const sendEmail = async (options) => {
     },
   });
   // console.log(options);
-  const mailOptions = {
-    from: "<raushan.043.kumar@gmail.com>",
-    to: options.email,
-    subject: options.subject,
-    text: options.message,
-  };
+  // const mailOptions = {
+  //   from: "<raushan.043.kumar@gmail.com>",
+  //   to: options.email,
+  //   subject: options.subject,
+  //   text: options.message,
+  // };
 
-  await transporter.sendMail(mailOptions);
+  await transporter.sendMail(options);
 };
 
 module.exports = sendEmail;

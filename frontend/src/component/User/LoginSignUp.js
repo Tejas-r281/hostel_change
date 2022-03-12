@@ -156,7 +156,7 @@ const LoginSignUp = () => {
           <Fragment>
             <div className="LoginSignUpContainer">
               <div className="LoginSignUpBox">
-               <p className="text-primary my-3 mx-3">You have to first Register and then Email varification and then login.</p>
+                  <p className="text-primary my-3 mx-3">You have to first Register and then Email varification and then login.<span className="text-danger"> And hostel number should be in between 8 to 16.</span></p>
                 <div>
                   <div className="login_signUp_toggle">
                     <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
