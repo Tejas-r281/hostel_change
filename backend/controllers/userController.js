@@ -49,8 +49,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   {
     from: "<raushan.043.kumar@gmail>",
     to: user.email,
-    email:user.email,
-    message:message,
+    // email:user.email,
+    text:message,
     subject:"Please click to confirm the you email address"
   }
   try {
@@ -232,8 +232,8 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
    {
      from: "<raushan.043.kumar@gmail>",
      to: user.email,
-      email:user.email,
-      message:message,
+      // email:user.email,
+      text:message,
       subject:"Please click to reset your password"
    }
   try {

@@ -1,5 +1,5 @@
 import React from "react";
-import {useEffect} from "react";
+import {useEffect,useState} from "react";
 import "./StudentList.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ function StudentList() {
   const alert = useAlert();
   const { users } = useSelector((state) => state.allUsers);
   const {error,isDeleted} =useSelector((state) => state.profile);
+   const [index1,setindex] = useState(0);
     // const { isAuthenticated } = useSelector(
     //   (state) => state.user
     // );
@@ -153,7 +154,7 @@ function StudentList() {
             <thead className="table-light">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name  Total : <span className="text-danger">{users.length}</span> </th>
+                <th scope="col">Name  Total : <span className="text-danger">{index1}</span> </th>
 
                 <th scope="col">Year/branch</th>
                 <th scope="col"> change ?</th>
@@ -166,7 +167,8 @@ function StudentList() {
               {users
                 .filter((user) => user.confirmed === true)
                 .map((user, index) => (
-                  <RowComponet user={user} index={index} key={index} />
+                  // setindex(index+1)
+                  <RowComponet user={user} index={index} setindex={setindex} key={index} />
                 ))}
             </tbody>
           </table>

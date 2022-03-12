@@ -1,10 +1,12 @@
 import React from 'react'
 import { Fragment } from 'react'
 
-function RowComponet({user,index}) {
+function RowComponet({user,index,setindex}) {
     // let index=1;
     // const [index,setIndex]=useState(0);
     // console.table(user);
+
+    setindex(index+1);
 
   return (
     <Fragment>
