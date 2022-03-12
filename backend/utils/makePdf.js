@@ -19,7 +19,7 @@ const data =
     email: options.email,
 
 }
-doc.pipe(fs.createWriteStream("../record/frontend/public/pdfs/hostel.pdf"));
+doc.pipe(fs.createWriteStream("hostel.pdf"));
 
 doc.fillColor("red").fontSize(25).text("Hostel Change Form", 100, 100);
 

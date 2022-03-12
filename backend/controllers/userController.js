@@ -179,7 +179,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     attachments: [
       {
         filename: "hostel.pdf",
-        path: "../record/frontend/public/pdfs/hostel.pdf",
+        path: "hostel.pdf",
         cid: "hostel",
       },
     ],
