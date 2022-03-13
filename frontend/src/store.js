@@ -8,6 +8,7 @@ import {
   allUsersReducer,
   profileReducer,
   forgotPasswordReducer,
+  sendEmailReducer,
 } from "./reducers/userReducer";
 
 
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   user: userReducer,
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
+  sendEmail: sendEmailReducer,
 });
 
 

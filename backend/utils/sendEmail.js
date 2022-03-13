@@ -90,7 +90,7 @@ const sendEmail = async (options) => {
   //   subject: options.subject,
   //   text: options.message,
   // };
-
+    // console.log(options);
   await transporter.sendMail(options);
 };
 

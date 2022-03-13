@@ -13,6 +13,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   }
   const { name, email, year, branch, password, change, hostel, nexthostel } =
     req.body;
+  // console.log(req.body);
+  // console.log("difference");
+  // console.lable(req.body);
   // console.log("inside the usercontroller");
   if (
     hostel <= 7 ||
@@ -50,8 +53,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     from: "<raushan.043.kumar@gmail>",
     to: user.email,
     // email:user.email,
-    text:message,
-    subject:"Please click to confirm the you email address"
+    text: message,
+    subject: "Please click to confirm the you email address"
   }
   try {
     await sendEmail(data);
@@ -90,8 +93,9 @@ exports.confirmUser = catchAsyncErrors(async (req, res, next) => {
     resetPasswordExpireemailconfirm: { $gt: Date.now() },
   });
 
+
   if (!user) {
-    return next(new ErrorHander("Invalid Token", 400));
+    return next(new ErrorHander("Now you can login , your email varified", 200));
   }
 
   user.confirmed = true;
@@ -107,6 +111,7 @@ exports.confirmUser = catchAsyncErrors(async (req, res, next) => {
 // Login User
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
+  // console.log(req.body);
 
   // checking if user has given password and email both
 
@@ -192,6 +197,70 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
   sendToken(user, req, 200, res);
 });
+// send user email
+
+exports.sendUserEmail = catchAsyncErrors(async (req, res, next) => {
+  const {sender,reciever} = req.body;
+    // console.log(sender);
+    // console.log(reciever);
+  const user = await User.findOne({email:sender});
+
+
+      // console.log((user.sentEmail).includes(reciever));
+
+           const value= (user.sentEmail).includes(reciever);
+      //  console.log(value);
+      if(value)
+      {
+        res.status(200).json({
+          success: true,
+          alreadysent:true,
+          data: "Email sent to user successfully",
+          message: `Email already already sent, so please wait fews days`,
+        });
+        return ;
+      }
+
+
+
+    // console.log("out of the block");
+  const data = {
+    from: sender,
+    to: reciever,
+    subject: "I want to Exchange hostel with you ",
+    html: `
+        <div  style=" height:500px; width:500px;background:#E5E5E5;">
+          <h2>My details as follows</h2>
+           <p> Name: ${user.name}</p>
+            <p> Email: ${user.email}</p>
+              <p> Year: ${user.year}</p>
+                <p> Branch: ${user.branch}</p>
+                  <p> Alloted: ${user.hostel}</p>
+                    <p> Expected: ${user.nexthostel ? user.nexthostel : "not applicable"}</p>
+          </div>`
+  };
+
+  try {
+   await User.updateOne(
+      { email: sender },
+      { $addToSet: { sentEmail: reciever } }
+    );
+    // await user.sentEmail.push(reciever);
+    // await user.save();
+    await sendEmail(data);
+    res.status(200).json({
+      success: true,
+      data: "Email sent to user successfully",
+      alreadysent:false,
+      message: `Email sent to  successfully`,
+    });
+  }
+  catch (err) {
+    console.log(err);
+    return next(new ErrorHander("There was an error sending the email. Try again later!", 500));
+  }
+});
+
 
 // Logout User
 exports.logout = catchAsyncErrors(async (req, res, next) => {
@@ -223,11 +292,11 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/password/reset/${resetToken}`;
+  const resetPasswordUrl = `${ req.protocol }://${req.get(
+      "host"
+  )}/password/reset / ${ resetToken } `;
 
-  const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
+  const message = `Your password reset token is: - \n\n ${ resetPasswordUrl } \n\nIf you have not requested this email then, please ignore it.`;
    const data =
    {
      from: "<raushan.043.kumar@gmail>",
@@ -241,7 +310,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: `Email sent to ${user.email} successfully`,
+      message: `Email sent to ${ user.email } successfully`,
     });
   } catch (error) {
     user.resetPasswordToken = undefined;
@@ -376,7 +445,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Get all users(admin)
 exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
-  const users = await User.find().sort({ change: -1, nexthostel: 1, name: 1 });
+  const users = await User.find({"confirmed": true}).sort({ change: -1, nexthostel: 1, name: 1 });
 
   res.status(200).json({
     success: true,
@@ -390,7 +459,7 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new ErrorHander(`User does not exist with Id: ${req.params.id}`)
+      new ErrorHander(`User does not exist with Id: ${ req.params.id } `)
     );
   }
 
@@ -427,7 +496,7 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new ErrorHander(`User does not exist with Id: ${req.params.id}`, 400)
+      new ErrorHander(`User does not exist with Id: ${ req.params.id } `, 400)
     );
   }
 

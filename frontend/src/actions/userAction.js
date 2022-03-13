@@ -34,13 +34,38 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_EMAIL_REQUEST,
+  USER_EMAIL_SUCCESS,
+  USER_EMAIL_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstant";
 import axios from "axios";
+// sending email
 
+export const sendEmails = (sender,reciever) => async (dispatch) => {
+  try {
+    // console.log("in action block");
+    // console.log(email);
+    dispatch({
+      type: USER_EMAIL_REQUEST,
+    });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const res = await axios.post("/api/v1/user/sendmail",{sender,reciever}, config);
+    dispatch({
+      type: USER_EMAIL_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_EMAIL_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
 // Login
 export const login = (email, password) => async (dispatch) => {
   try {
+    // console.log("in action block");
     dispatch({ type: LOGIN_REQUEST });
 
     const config = { headers: { "Content-Type": "application/json" } };

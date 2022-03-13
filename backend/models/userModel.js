@@ -54,6 +54,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  sentEmail: [
+    {
+      type:String,
+    }
+  ],
 
   //   avatar: {
   //     public_id: {
@@ -91,7 +96,7 @@ userSchema.pre("save", async function (next) {
 // JWT TOKEN
 userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: '2d',
+    expiresIn: '1d',
   });
 };
 

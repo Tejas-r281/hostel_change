@@ -38,9 +38,56 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
+  USER_EMAIL_REQUEST,
+  USER_EMAIL_SUCCESS,
+  USER_EMAIL_FAIL,
+  USER_EMAIL_RESET,
   CLEAR_ERRORS,
   DELETE_USER,
 } from "../constants/userConstant";
+// send email
+export const sendEmailReducer =(state={},action)=>{
+
+  switch(action.type){
+    case USER_EMAIL_REQUEST:
+      return {
+        ...state,
+        loading:true,
+        error:null,
+        sent:false,
+        alreadysent:false,
+      }
+    case USER_EMAIL_SUCCESS:
+      return {
+        ...state,
+        loading:false,
+        sent:true,
+        error:null,
+        data:action.payload,
+        alreadysent:action.payload.alreadysent,
+      }
+    case USER_EMAIL_FAIL:
+      return {
+        ...state,
+        loading:false,
+        sent:false,
+        error:action.payload,
+        alreadysent: action.payload.alreadysent,
+      }
+      case USER_EMAIL_RESET:
+        return {
+          ...state,
+          loading:false,
+          sent:false,
+          alreadysent:false
+        }
+
+    default:
+      return state;
+  }
+}
+
+
 
 export const userReducer = (state = { user: {} }, action) => {
   // console.log(action);

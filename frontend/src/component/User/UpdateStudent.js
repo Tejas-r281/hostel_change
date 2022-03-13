@@ -23,8 +23,8 @@ function UpdateProfile1() {
 
   const [user1, setUser] = useState({
     name: "",
-    hostel: "",
-    nexthostel: "",
+    hostel: 8,
+    nexthostel: 8,
     change: false,
   });
   //   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
@@ -78,7 +78,7 @@ function UpdateProfile1() {
 
     if (isUpdated) {
       alert.success("Profile Updated Successfully");
-      // dispatch(loadUser());
+      dispatch(loadUser());
       navigate("/");
       dispatch({
         type: UPDATE_PROFILE_RESET,
@@ -112,24 +112,36 @@ function UpdateProfile1() {
                     onChange={registerDataChange} />
                 </div>
                 <div className="CurrentHostel">
-                  <label htmlFor="hostel">Current Hostel</label>
-                  <input
-                    type="number"
-                    placeholder="Current Hostel No"
-                    required
-                    name="hostel"
-                    value={hostel}
-                    onChange={registerDataChange} />
+                    <span>Alloted Hostel</span>
+                    <select
+                      id="ddlViewBy2"
+                      className="mx-3"
+                      name="hostel"
+                      onChange={registerDataChange}
+                    >
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                    </select>
                 </div>
                 <div className="CurrentHostel">
-                  <label htmlFor="nexthostel">Next Hostel</label>
-                  <input
-                    type="number"
-                    placeholder="which hostel do you want to go ?"
-                    // required
-                    name="nexthostel"
-                    value={nexthostel}
-                    onChange={registerDataChange} />
+                    <span>Expected hostel </span>
+                    <select
+                      id="ddlViewBy3"
+                      className="mx-3"
+                      name="nexthostel"
+                      onChange={registerDataChange}
+                    >
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                    </select>
                 </div>
 
                 <div>

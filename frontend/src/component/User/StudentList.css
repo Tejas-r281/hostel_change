@@ -21,3 +21,10 @@ a
     height:30px;
     margin-top:20px;
 }
+/* add media query  */
+@media only screen and (max-width: 600px) {
+   .btn
+   {
+       padding:0 !important;
+   }
+}

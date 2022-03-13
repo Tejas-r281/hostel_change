@@ -2,7 +2,7 @@ import React from "react";
 import {useEffect,useState} from "react";
 import "./StudentList.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import {
   deleteUser,
   getAllUsers,
@@ -16,7 +16,9 @@ import { DELETE_USER_RESET, DELETE_USER } from "../../constants/userConstant.js"
 function StudentList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const ref=
   const alert = useAlert();
+  // const inputEl = useRef(null);
   const { users } = useSelector((state) => state.allUsers);
   const {error,isDeleted} =useSelector((state) => state.profile);
    const [index1,setindex] = useState(0);
@@ -142,6 +144,7 @@ function StudentList() {
             </button>
             <span className="badge rounded-pill bg-primary">
               <a
+                rel="noreferrer"
                 href="https://www.linkedin.com/in/raushankumar43/"
                 target="_blank"
               >
@@ -154,7 +157,7 @@ function StudentList() {
             <thead className="table-light">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name  Total : <span className="text-danger">{index1}</span> </th>
+                <th scope="col">Name  Total : <span  className="text-danger">{index1}</span> </th>
 
                 <th scope="col">Year/branch</th>
                 <th scope="col"> change ?</th>
@@ -164,11 +167,12 @@ function StudentList() {
               </tr>
             </thead>
             <tbody>
-              {users
-                .filter((user) => user.confirmed === true)
-                .map((user, index) => (
+              {users.map((user, index) => (
                   // setindex(index+1)
-                  <RowComponet user={user} index={index} setindex={setindex} key={index} />
+
+                  <RowComponet  userss={user} index={index} setindex={setindex} key={index} />
+                  // <button ref={Student} value={users.email} onClick={Emailsend} type="button" className="btn mx-2 btn-info">Send Request</button>
+
                 ))}
             </tbody>
           </table>
