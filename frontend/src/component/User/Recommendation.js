@@ -65,12 +65,7 @@ function Recommendation() {
                         >
                             Recomendation
                         </button>
-                        <button
-                            onClick={suggestion}
-                            className="btn btn-dark updateButton"
-                        >
-                            Suggestions
-                        </button>
+                      
                     </div>
                     <div className="details">
                         <button
