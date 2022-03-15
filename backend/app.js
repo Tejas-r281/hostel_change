@@ -21,9 +21,10 @@ const errorMiddleware = require("./middleware/error");
 
 
  const user = require("./routes/userRoute");
-
+const suggestion= require("./routes/suggestionRoute");
 
  app.use("/api/v1", user);
+ app.use("/api/v1",suggestion);
 
  app.use(express.static(path.join(__dirname, "../frontend/build")));
  app.get("*", (req, res, next) =>

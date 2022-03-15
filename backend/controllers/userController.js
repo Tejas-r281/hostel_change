@@ -511,3 +511,26 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     message: "User Deleted Successfully",
   });
 });
+
+//Get recommendation
+exports.recommendation = catchAsyncErrors(async (req, res, next) =>
+ {
+  const {alloted,expected} = req.query;
+  // console.log(alloted,expected);
+  const user = await User.find({"hostel":expected,"nexthostel":alloted,"confirmed":true});
+  // console.log(user);
+  if(!user)
+  {
+    return next(new ErrorHander("Sorry there is not match for you please try later",400));
+  }
+return res.status(200).json({
+    data:user,
+    success: true,
+    message: "User Recommendations successfully",
+});
+
+
+});
+
+//get suggestion
+

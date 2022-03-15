@@ -1,8 +1,8 @@
 import React from "react";
-import {useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import "./StudentList.css";
 import { useSelector, useDispatch } from "react-redux";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   deleteUser,
   getAllUsers,
@@ -20,63 +20,64 @@ function StudentList() {
   const alert = useAlert();
   // const inputEl = useRef(null);
   const { users } = useSelector((state) => state.allUsers);
-  const {error,isDeleted} =useSelector((state) => state.profile);
-   const [index1,setindex] = useState(0);
-    // const { isAuthenticated } = useSelector(
-    //   (state) => state.user
-    // );
-    const changeStatus=(e)=>
-    {
-       navigate("/me/update");
+  const { error, isDeleted } = useSelector((state) => state.profile);
+  const [index1, setindex] = useState(0);
+  // const { isAuthenticated } = useSelector(
+  //   (state) => state.user
+  // );
+  const recommendation = (e) =>
+  {
+    e.preventDefault();
+    navigate("/recommendation");
+  }
+  const suggestion = (e) =>
+  {
+    e.preventDefault();
+    navigate("/suggestion");
+  }
+  const changeStatus = (e) => {
+    navigate("/me/update");
+  }
+
+  const deleteUser1 = (e) => {
+    // console.log("delete");
+    dispatch(deleteUser());
+    dispatch(getAllUsers());
+  }
+
+  const logoutUser1 = (e) => {
+
+    dispatch(logout());
+
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error("You are already out of this list");
+      dispatch(clearErrors());
     }
 
-    const deleteUser1=(e)=>
-    {
-      // console.log("delete");
-      dispatch(deleteUser());
-      dispatch(getAllUsers());
+    if (isDeleted) {
+      alert.error("You are removed from this list");
+      dispatch({
+        type: DELETE_USER_RESET,
+
+      });
+      dispatch({
+        type: DELETE_USER,
+      });
+      //  dispatch(getAllUsers());
     }
 
-      const logoutUser1 = (e) => {
-        // console.log("delete");
-        //  navigate("/");
-        dispatch(logout());
-        // dispatch(getAllUsers());
-      };
-
-    useEffect(() => {
-      if (error) {
-        alert.error("You are already out of this list");
-        dispatch(clearErrors());
-      }
-      // console.log("yeah user is deleted");
-      // console.log(isDeleted);
-
-
-      //  if (isAuthenticated) {
-         // history.push(redirect);
-        //  navigate("/students");
-        if(isDeleted)
-        {
-          alert.error("You are removed from this list");
-            dispatch({
-              type: DELETE_USER_RESET,
-
-            });
-            dispatch({
-              type: DELETE_USER,
-            });
-          //  dispatch(getAllUsers());
-        }
-
-      //  }
-    }, [error,alert,dispatch,isDeleted]);
+    //  }
+  }, [error, alert, dispatch, isDeleted]);
 
 
   return (
     <div className="container-fluid fixed">
       <div className="row">
         <div className="col-md-10 col-12 mx-auto">
+
           <div className=" py-2 my-2 alert alert-primary" role="alert">
             This is not an official portal of institute, it's created by a
             student for ease of exchanging
@@ -102,6 +103,7 @@ function StudentList() {
               to update your status in the portal.
             </div>
           </div>
+
           <div
             className=" py-2  my-2 alert alert-danger d-flex align-items-center"
             role="alert"
@@ -121,6 +123,17 @@ function StudentList() {
             <div>
               Once you click on REMOVE NAME, you will have to register again
             </div>
+          </div>
+          <div className="suggestion1">
+            <button
+              onClick={recommendation}
+              className="btn btn-secondary updateButton"
+            >
+              Recomendation
+            </button>
+
+           
+
           </div>
           <div className="details">
             <button
@@ -157,7 +170,7 @@ function StudentList() {
             <thead className="table-light">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name  Total : <span  className="text-danger">{index1}</span> </th>
+                <th scope="col">Name  Total : <span className="text-danger">{index1}</span> </th>
 
                 <th scope="col">Year/branch</th>
                 <th scope="col"> change ?</th>
@@ -168,12 +181,12 @@ function StudentList() {
             </thead>
             <tbody>
               {users.map((user, index) => (
-                  // setindex(index+1)
+                // setindex(index+1)
 
-                  <RowComponet  userss={user} index={index} setindex={setindex} key={index} />
-                  // <button ref={Student} value={users.email} onClick={Emailsend} type="button" className="btn mx-2 btn-info">Send Request</button>
+                <RowComponet userss={user} index={index} setindex={setindex} key={index} />
+                // <button ref={Student} value={users.email} onClick={Emailsend} type="button" className="btn mx-2 btn-info">Send Request</button>
 
-                ))}
+              ))}
             </tbody>
           </table>
         </div>

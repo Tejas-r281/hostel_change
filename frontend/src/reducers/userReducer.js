@@ -44,7 +44,36 @@ import {
   USER_EMAIL_RESET,
   CLEAR_ERRORS,
   DELETE_USER,
+  USER_RECOMMENDATION_REQUEST,
+  USER_RECOMMENDATION_SUCCESS,
+  USER_RECOMMENDATION_FAIL,
 } from "../constants/userConstant";
+//Recommendation list of users
+
+export const recommendationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_RECOMMENDATION_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USER_RECOMMENDATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload,
+      };
+    case USER_RECOMMENDATION_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 // send email
 export const sendEmailReducer =(state={},action)=>{
 

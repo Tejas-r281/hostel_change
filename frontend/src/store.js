@@ -9,7 +9,13 @@ import {
   profileReducer,
   forgotPasswordReducer,
   sendEmailReducer,
+  recommendationReducer
 } from "./reducers/userReducer";
+
+import {
+  commentReducer,
+  allcommentReducer
+} from "./reducers/suggestionReducer";
 
 
 const reducer = combineReducers({
@@ -18,6 +24,9 @@ const reducer = combineReducers({
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
   sendEmail: sendEmailReducer,
+  recommendation: recommendationReducer,
+  comment: commentReducer,
+  allcomment: allcommentReducer
 });
 
 

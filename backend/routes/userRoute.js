@@ -14,6 +14,8 @@ const {
   deleteUser,
   confirmUser,
   sendUserEmail,
+  recommendation,
+
   // homepage
 } = require("../controllers/userController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
@@ -29,6 +31,8 @@ router.route("/user/sendmail").post(sendUserEmail);
 router.route("/password/forgot").post(forgotPassword);
 
 router.route("/password/reset/:token").put(resetPassword);
+
+router.route("/user/recommendation").get(isAuthenticatedUser,recommendation);
 
 router.route("/user/confirm/:token").get(confirmUser);
 

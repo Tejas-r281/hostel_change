@@ -38,8 +38,42 @@ import {
   USER_EMAIL_SUCCESS,
   USER_EMAIL_FAIL,
   CLEAR_ERRORS,
+  USER_RECOMMENDATION_REQUEST,
+  USER_RECOMMENDATION_SUCCESS,
+  USER_RECOMMENDATION_FAIL,
 } from "../constants/userConstant";
 import axios from "axios";
+//recommendation list of users
+export const getRecommendationAction = (alloted,expected) => async (dispatch) => {
+  try
+  {
+    dispatch({
+      type: USER_RECOMMENDATION_REQUEST,
+    });
+
+    // const config = { headers: { "Content-Type": "application/json" } };
+    // const body = JSON.stringify({ alloted,expected });
+    const res = await axios.get(`/api/v1/user/recommendation?alloted=${alloted}&expected=${expected}`);
+    dispatch({
+      type: USER_RECOMMENDATION_SUCCESS,
+      payload: res.data,
+    });
+  }
+  catch (err) {
+    dispatch({
+      type: USER_RECOMMENDATION_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+
+
+}
+
+
+
+
+
+
 // sending email
 
 export const sendEmails = (sender,reciever) => async (dispatch) => {

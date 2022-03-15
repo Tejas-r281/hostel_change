@@ -21,6 +21,12 @@ a
     height:30px;
     margin-top:20px;
 }
+.suggestion1
+{
+    display:flex;
+    justify-content:space-between;
+
+}
 /* add media query  */
 @media only screen and (max-width: 600px) {
    .btn
