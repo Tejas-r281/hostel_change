@@ -5,14 +5,14 @@ import { useAlert } from "react-alert";
 import { useEffect, useState } from 'react';
 import RowComponet from "./RowComponet";
 
-import { getRecommendationAction,deleteUser,getAllUsers,logout } from "../../actions/userAction";
+import { getRecommendationAction, deleteUser, getAllUsers, logout } from "../../actions/userAction";
 
 
 function Recommendation() {
-    const [index1, setindex] = useState(0);
+
     const { user } = useSelector((state) => state.user);
     const { users } = useSelector((state) => state.recommendation);
-
+    const [years, setyear] = useState(0);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,12 +21,17 @@ function Recommendation() {
         e.preventDefault();
         navigate("/recommendation");
     }
-    const suggestion = (e) => {
-        e.preventDefault();
-        navigate("/suggestion");
+    const selectyear = (e) => {
+        // console.log(e.target.value);
+        const val = e.target.value;
+        setyear(parseInt(val));
     }
+
     const changeStatus = (e) => {
         navigate("/me/update");
+    }
+    const profile = (e) => {
+        navigate("/profile");
     }
 
     const deleteUser1 = (e) => {
@@ -40,7 +45,7 @@ function Recommendation() {
         dispatch(logout());
 
     };
-    const studentList= (e) => {
+    const studentList = (e) => {
         navigate("/students");
     }
 
@@ -52,7 +57,7 @@ function Recommendation() {
         {
             alert.error("Error");
         }
-    }, [alert, dispatch, user.hostel, user.nexthostel]);
+    }, [alert, dispatch, user.hostel, user.nexthostel,years]);
 
     return (
         <div className="container-fluid fixed">
@@ -65,9 +70,31 @@ function Recommendation() {
                         >
                             Recomendation
                         </button>
-                      
+                        <button
+                            onClick={profile}
+                            className="btn btn-secondary updateButton"
+                        >
+                            Profile
+                        </button>
+
+
                     </div>
                     <div className="details">
+                        <div>
+                            <span> Category:Yearwise </span>
+                            <select
+                                id="ddlViewBy"
+                                className="mx-3"
+                                name="year"
+                                onChange={selectyear}
+                            >
+                                <option value="">Select Year</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+
+                            </select>
+                        </div>
                         <button
                             onClick={studentList}
                             className="btn btn-primary updateButton"
@@ -93,21 +120,14 @@ function Recommendation() {
                         >
                             Logout
                         </button>
-                        <span className="badge rounded-pill bg-primary">
-                            <a
-                                rel="noreferrer"
-                                href="https://www.linkedin.com/in/raushankumar43/"
-                                target="_blank"
-                            >
-                                Admin
-                            </a>
-                        </span>
+
                     </div>
+
                     <table className="table">
                         <thead className="table-light">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name  Total : <span className="text-danger">{index1}</span> </th>
+                                <th scope="col">Name  Total : <span className="text-danger">{}</span> </th>
 
                                 <th scope="col">Year/branch</th>
                                 <th scope="col"> change ?</th>
@@ -115,9 +135,14 @@ function Recommendation() {
                                 <th scope="col">Excepted</th>
                             </tr>
 
-                            { (users &&users.data)? users.data.map((user, index) => (
-                                <RowComponet userss={user} index={index} setindex={setindex} key={index} />
-                            )):"Soryy there is no match for you "
+                            {(users && users.data) ? (!years ? users.data.map((user, index) => (
+                                <RowComponet userss={user} index={index}  key={index} />
+                            )) :
+                                users.data.filter(user => user.year === years).map((user, index) => (
+                                    <RowComponet userss={user} index={index}  key={index} />
+                                ))
+
+                            ) : "Soryy there is no match for you "
                             }
 
                         </thead>

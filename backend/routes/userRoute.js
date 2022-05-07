@@ -15,6 +15,7 @@ const {
   confirmUser,
   sendUserEmail,
   recommendation,
+  deleteUsers,
 
   // homepage
 } = require("../controllers/userController");
@@ -48,11 +49,12 @@ router.route("/users").get(getAllUser);
 
 
 router.route("/me/delete").delete(isAuthenticatedUser, deleteUser);
+// router.route("/admin/user/:id").get(isAuthenticatedUser, deleteUser);
 
 router
   .route("/admin/user/:id")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getSingleUser)
   .put(isAuthenticatedUser, authorizeRoles("admin"), updateUserRole)
-  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
+  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUsers);
 
 module.exports = router;

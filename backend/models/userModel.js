@@ -56,8 +56,14 @@ const userSchema = new mongoose.Schema({
   },
   sentEmail: [
     {
-      type:String,
+    email:{
+      type: String,
+    },
+    date:{
+      type: Date,
+      default: Date.now,
     }
+  }
   ],
 
   //   avatar: {

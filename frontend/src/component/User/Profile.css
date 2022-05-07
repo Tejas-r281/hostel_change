@@ -1,0 +1,17 @@
+.profiles
+{
+    background:#866363;
+    /* height:80vh; */
+    width:auto;
+    /* margin-top:20px; */
+}
+.name
+{
+    text-align:center;
+    font-size:1vmax;
+}
+.one1
+{
+   background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(1,143,176,0.3900910706079307) 29%, rgba(0,212,255,1) 100%);
+}

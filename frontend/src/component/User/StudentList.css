@@ -27,6 +27,11 @@ a
     justify-content:space-between;
 
 }
+.studentDetails
+{
+    display:flex;
+    justify-content:space-between;
+}
 /* add media query  */
 @media only screen and (max-width: 600px) {
    .btn

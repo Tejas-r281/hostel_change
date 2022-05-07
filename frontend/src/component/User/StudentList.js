@@ -20,8 +20,10 @@ function StudentList() {
   const alert = useAlert();
   // const inputEl = useRef(null);
   const { users } = useSelector((state) => state.allUsers);
+  const {user} = useSelector((state) => state.user);
   const { error, isDeleted } = useSelector((state) => state.profile);
   const [index1, setindex] = useState(0);
+  const [years,setyear]=useState(0);
   // const { isAuthenticated } = useSelector(
   //   (state) => state.user
   // );
@@ -30,13 +32,20 @@ function StudentList() {
     e.preventDefault();
     navigate("/recommendation");
   }
-  const suggestion = (e) =>
-  {
-    e.preventDefault();
-    navigate("/suggestion");
-  }
+
   const changeStatus = (e) => {
     navigate("/me/update");
+  }
+
+  const profile=(e)=>
+  {
+    navigate("/profile");
+  }
+  const selectyear=(e)=>
+  {
+    // console.log(e.target.value);
+    const val= e.target.value;
+    setyear(parseInt(val));
   }
 
   const deleteUser1 = (e) => {
@@ -70,8 +79,9 @@ function StudentList() {
     }
 
     //  }
-  }, [error, alert, dispatch, isDeleted]);
+  }, [error, alert, dispatch, isDeleted,years]);
 
+  // console.log(years);
 
   return (
     <div className="container-fluid fixed">
@@ -82,48 +92,21 @@ function StudentList() {
             This is not an official portal of institute, it's created by a
             student for ease of exchanging
           </div>
-          <div
-            className=" py-2  my-2 alert alert-primary d-flex align-items-center"
-            role="alert"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              className="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
-              viewBox="0 0 16 16"
-              role="img"
-              aria-label="Warning:"
-            >
-              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </svg>
-            <div>
-              After you have agreed with someone to exchange hostel, make sure
-              to update your status in the portal.
-            </div>
-          </div>
 
-          <div
-            className=" py-2  my-2 alert alert-danger d-flex align-items-center"
-            role="alert"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              className="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
-              viewBox="0 0 16 16"
-              role="img"
-              aria-label="Warning:"
-            >
-              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </svg>
-            <div>
-              Once you click on REMOVE NAME, you will have to register again
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>{user.name}!</strong>  After you have agreed with someone to exchange hostel, make sure
+              to update your status in the portal.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-          </div>
+
+
+
+
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>{user.name}!</strong> Once you click on REMOVE NAME, you will have to register again.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
           <div className="suggestion1">
             <button
               onClick={recommendation}
@@ -131,11 +114,34 @@ function StudentList() {
             >
               Recomendation
             </button>
+            <button
+              onClick={profile}
+              className="btn btn-secondary updateButton"
+            >
+              Profile
+            </button>
 
-           
+
+
 
           </div>
           <div className="details">
+
+            <div>
+              <span> Category:Yearwise </span>
+              <select
+                id="ddlViewBy"
+                className="mx-3"
+                name="year"
+                onChange={selectyear}
+              >
+                <option value="">Select Year</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+
+              </select>
+            </div>
             <button
               onClick={changeStatus}
               className="btn btn-primary updateButton"
@@ -155,16 +161,10 @@ function StudentList() {
             >
               Logout
             </button>
-            <span className="badge rounded-pill bg-primary">
-              <a
-                rel="noreferrer"
-                href="https://www.linkedin.com/in/raushankumar43/"
-                target="_blank"
-              >
-                Admin
-              </a>
-            </span>
+
           </div>
+
+
 
           <table className="table">
             <thead className="table-light">
@@ -180,13 +180,22 @@ function StudentList() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {!years?users.map((user, index) => (
                 // setindex(index+1)
 
                 <RowComponet userss={user} index={index} setindex={setindex} key={index} />
                 // <button ref={Student} value={users.email} onClick={Emailsend} type="button" className="btn mx-2 btn-info">Send Request</button>
 
+              )):
+              // use filter and show only whose user year is year
+
+              users.filter(user => user.year === years).map((user, index) => (
+                // setindex(index+1)
+                <RowComponet userss={user} index={index} setindex={setindex} key={index} />
+                // <button ref={Student} value={users.email} onClick={Emailsend} type="button" className="btn mx-2 btn-info">Send Request</button>
               ))}
+
+
             </tbody>
           </table>
         </div>

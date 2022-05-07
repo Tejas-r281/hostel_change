@@ -248,7 +248,7 @@ exports.sendUserEmail = catchAsyncErrors(async (req, res, next) => {
   try {
    await User.updateOne(
       { email: sender },
-      { $addToSet: { sentEmail: reciever } }
+      { $addToSet: { sentEmail:{email:reciever} } }
     );
     // await user.sentEmail.push(reciever);
     // await user.save();
@@ -495,9 +495,24 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 
 // Delete User --Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
-  // console.log("inside the delete section");
-  const user = await User.findById(req.user.id);
+  const user= await User.findByIdAndDelete(req.user.id);
+  if(!user){
+    return next(new ErrorHander(`User does not exist with Id: ${ req.params.id } `));
+  }
+   await user.remove();
+  res.status(200).json({
+    success: true,
+    user,
+  });
+}
+);
+
+exports.deleteUsers = catchAsyncErrors(async (req, res, next) => {
+  console.log("inside the delete section");
+  const user = await User.findById(req.params.id);
   // console.log(user);
+  // console.log(req.params.id);
+
 
   if (!user) {
     return next(

@@ -48,7 +48,7 @@ const LoginSignUp = () => {
   // console.log(user);
   // // console.log("difference");
   // console.log("console.table(user)");
-  console.table(user);
+  // console.table(user);
 
 
   const loginSubmit = (e) => {
@@ -160,8 +160,16 @@ const LoginSignUp = () => {
         <Fragment>
           <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">
-              <p className="text-primary my-3 mx-3">You have to first Register and then Email varification and then login.</p>
-              <p className="text-danger mx-3">Both hostel number should not be equal.</p>
+                <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Hello User!</strong> You have to first Register and then Email varification and then login.
+                  <button type="button" className="btn-close cross" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Hello User!</strong>Both hostel number should not be equal.
+                  <button type="button" className="btn-close cross" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
               <div>
                 <div className="login_signUp_toggle">
                   <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
@@ -232,7 +240,7 @@ const LoginSignUp = () => {
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
+
                   </select>
                 </div>
                 <div>

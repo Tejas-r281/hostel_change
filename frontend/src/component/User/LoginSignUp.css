@@ -226,4 +226,9 @@
     margin-left:47px;
 }
 
+.alert-dismissible .btn-close
+{
+  width:20px;
+}
+
 

@@ -18,8 +18,8 @@ function Suggestion() {
   const [commentText, setCommentText] = useState("")
 
   const { data } = useSelector((state) => state.allcomment);
-  const data1= data.data;
-  const data2= data1.data;
+
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // console.log(commentText);
@@ -75,12 +75,11 @@ function Suggestion() {
             <h4 className="form_header">All comments goes here</h4>
             <div className="comment_section">
                   {
-                    data2.map((item, index) => {
-                      return <SuggList key={index} data={item}/>
+                    data.map((item, index) => {
+                      return <SuggList  key={index}  data1={item}/>
                     })
 
                   }
-
             </div>
 
           </div>

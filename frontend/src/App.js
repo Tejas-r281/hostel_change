@@ -14,6 +14,9 @@ import ForgotPassword from "./component/User/ForgotPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
 import Recommendation from "./component/User/Recommendation.js";
 import Suggestion from "./component/User/Suggestion.js";
+import Profile from "./component/User/Profile.js";
+import ShowAll from "./component/Admin/ShowAll";
+import AdminLanding from "./component/Admin/AdminLanding.js"
 // import { useSelector } from "react-redux";
 import {
   // addcomment,
@@ -40,7 +43,7 @@ function App() {
 
   }, []);
 
-  window.addEventListener("contextmenu", (e) => e.preventDefault());
+  // window.addEventListener("contextmenu", (e) => e.preventDefault());
   return (
     <Router>
       <Routes>
@@ -55,6 +58,9 @@ function App() {
         <Route exact path="/password/reset/:token" element={<ResetPassword/>} />
         <Route  exact path="/recommendation" element={<Recommendation />} />
         <Route  exact path="/suggestion" element={<Suggestion />} />
+        <Route  exact path="/profile" element={<Profile />} />
+        <Route exact path ="/admin" element={<AdminLanding />} />
+        <Route exact path ="/admin/showall" element={<ShowAll />} />
 
         <Route path="/*" element={<NotFound />} />
       </Routes>

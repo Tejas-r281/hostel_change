@@ -31,8 +31,8 @@ function RowComponet({userss,index,setindex}) {
       const userindex=Student.current.attributes[1].nodeValue;
       const reciever = users[userindex];
       const sender= user;
-      console.log(reciever);
-      console.log(sender);
+      // console.log(reciever);
+      // console.log(sender);
       if(reciever.change===false || sender.change===false||(reciever.hostel!==sender.nexthostel) || (sender.hostel!==reciever.nexthostel))
       {
         alert.error("This person is not valid match for you to send email");
@@ -70,7 +70,7 @@ function RowComponet({userss,index,setindex}) {
           <button ref={Student} value={userss.email} index1={index} onClick={Emailsend} type="button" className="btn mx-2 btn-info">{sent?"Sent":"Send Request"}</button>
         </td>
         <td>
-          {userss.year}/{userss.branch}
+          <span className="studentYear">{userss.year}</span>/{userss.branch}
         </td>
 
         {userss.change === true ? (

@@ -14,8 +14,13 @@ import {
 
 import {
   commentReducer,
-  allcommentReducer
+  allcommentReducer,
+  likeanddislikeReducer,
+  commentDetailReducer
 } from "./reducers/suggestionReducer";
+import {
+  deleteUserReducer
+} from "./reducers/adminReducer";
 
 
 const reducer = combineReducers({
@@ -26,7 +31,10 @@ const reducer = combineReducers({
   sendEmail: sendEmailReducer,
   recommendation: recommendationReducer,
   comment: commentReducer,
-  allcomment: allcommentReducer
+  allcomment: allcommentReducer,
+  likeanddislike: likeanddislikeReducer,
+  commentDetail: commentDetailReducer,
+  deleteUser: deleteUserReducer
 });
 
 
