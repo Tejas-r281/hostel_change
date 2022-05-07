@@ -194,7 +194,7 @@ const LoginSignUp = () => {
                 <div className="loginPassword">
                   <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="password >=8 digits"
                     required
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
@@ -265,7 +265,7 @@ const LoginSignUp = () => {
                 <div className="signUpPassword">
                   <input
                     type="password"
-                    placeholder="Password"
+                      placeholder="password >=8 digits"
                     required
                     name="password"
                     value={password}
