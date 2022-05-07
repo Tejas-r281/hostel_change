@@ -13,6 +13,7 @@ function Recommendation() {
     const { user } = useSelector((state) => state.user);
     const { users } = useSelector((state) => state.recommendation);
     const [years, setyear] = useState(0);
+    const [index1, setindex] = useState(0);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -136,10 +137,10 @@ function Recommendation() {
                             </tr>
 
                             {(users && users.data) ? (!years ? users.data.map((user, index) => (
-                                <RowComponet userss={user} index={index}  key={index} />
+                                <RowComponet userss={user} index={index}  key={index} setindex={setindex} />
                             )) :
                                 users.data.filter(user => user.year === years).map((user, index) => (
-                                    <RowComponet userss={user} index={index}  key={index} />
+                                    <RowComponet userss={user} index={index}  key={index} setindex={setindex} />
                                 ))
 
                             ) : "Soryy there is no match for you "

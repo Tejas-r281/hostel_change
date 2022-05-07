@@ -7,9 +7,7 @@ import { useAlert } from "react-alert";
 import { USER_EMAIL_RESET } from "../../constants/userConstant.js";
 
 function RowComponet({userss,index,setindex}) {
-    // let index=1;
-    // const [index,setIndex]=useState(0);
-    // console.table(user);
+    
     const dispatch = useDispatch();
     const alert = useAlert();
   const { user } = useSelector(
