@@ -11,7 +11,7 @@ const sendToken = (user,req, statusCode, res,confirm) => {
     httpOnly: true,
   };
   if (confirm === "confirmation") {
-    res.redirect(`${req.protocol}://${req.get("host")}`);
+    res.redirect('https://hostel-student.herokuapp.com/loginsignup');
   } else {
     res.status(statusCode).cookie("hostel_student", token, options).json({
       success: true,

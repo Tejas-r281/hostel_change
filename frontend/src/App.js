@@ -61,6 +61,7 @@ function App() {
         <Route  exact path="/profile" element={<Profile />} />
         <Route exact path ="/admin" element={<AdminLanding />} />
         <Route exact path ="/admin/showall" element={<ShowAll />} />
+        <Route exact path="/loginsignup" element={<LoginSignUp />} />
 
         <Route path="/*" element={<NotFound />} />
       </Routes>
